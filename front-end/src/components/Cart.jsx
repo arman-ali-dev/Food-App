@@ -10,10 +10,11 @@ export const Cart = () => {
   useGetAllCartItems();
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
-
+  const [isDeleteLoading, setIsLoadingDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteCartItem = async (id) => {
+    setIsLoadingDelete(true);
     try {
       await axios.delete(
         `https://arman-food-app.onrender.com/api/carts/delete/${id}`,
@@ -28,6 +29,8 @@ export const Cart = () => {
       dispatch(deleteCartItem({ id }));
     } catch (error) {
       console.error(error.message);
+    } finally {
+      setIsLoadingDelete(false);
     }
   };
 
@@ -100,7 +103,7 @@ export const Cart = () => {
                         <button
                           onClick={() => handleDeleteCartItem(item._id)}
                           className="border-0"
-                          disabled={isLoading}
+                          disabled={isDeleteLoading}
                         >
                           <i className="fa-solid fa-trash text-danger"></i>
                         </button>
