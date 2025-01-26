@@ -7,7 +7,9 @@ export default function useGetAllFoodItems() {
   const dispatch = useDispatch();
   const fetchFoods = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/foods/all");
+      const { data } = await axios.get(
+        "https://arman-food-app.onrender.com/api/foods/all"
+      );
       dispatch(setFoods(data.foods));
     } catch (error) {
       console.error(error.message);

@@ -19,7 +19,7 @@ export const Card = ({ item }) => {
     setIsLoading(true);
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/carts/add",
+        "https://arman-food-app.onrender.com/api/carts/add",
         {
           foodID: item._id,
           imageURL: item.imageUrl,

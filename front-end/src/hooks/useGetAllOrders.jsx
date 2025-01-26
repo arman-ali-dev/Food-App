@@ -11,7 +11,7 @@ export default function useGetAllOrders() {
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8000/api/orders/fetch",
+        "https://arman-food-app.onrender.com/api/orders/fetch",
         {
           withCredentials: true,
           headers: {

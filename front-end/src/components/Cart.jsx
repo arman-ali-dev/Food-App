@@ -16,12 +16,15 @@ export const Cart = () => {
   const handleDeleteCartItem = async (id) => {
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:8000/api/carts/delete/${id}`, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      });
+      await axios.delete(
+        `https://arman-food-app.onrender.com/api/carts/delete/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
 
       dispatch(deleteCartItem({ id }));
     } catch (error) {

@@ -32,7 +32,7 @@ export function Signup() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/users/signup",
+        "https://arman-food-app.onrender.com/api/users/signup",
         userInfo
       );
 

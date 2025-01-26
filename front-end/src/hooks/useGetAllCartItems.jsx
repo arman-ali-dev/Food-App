@@ -11,7 +11,7 @@ export default function useGetAllCartItems() {
   const fetchCartItems = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8000/api/carts/fetch",
+        "https://arman-food-app.onrender.com/api/carts/fetch",
         {
           withCredentials: true,
           headers: {

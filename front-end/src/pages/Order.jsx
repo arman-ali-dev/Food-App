@@ -16,7 +16,7 @@ export const Order = () => {
     setIsLoading(true);
     try {
       await axios.delete(
-        `http://localhost:8000/api/orders/cancel/${cartItemID}`,
+        `https://arman-food-app.onrender.com/api/orders/cancel/${cartItemID}`,
         {
           withCredentials: true,
           headers: {
