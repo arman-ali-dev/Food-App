@@ -14,7 +14,6 @@ export const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteCartItem = async (id) => {
-    setIsLoading(true);
     try {
       await axios.delete(
         `https://arman-food-app.onrender.com/api/carts/delete/${id}`,
@@ -29,14 +28,14 @@ export const Cart = () => {
       dispatch(deleteCartItem({ id }));
     } catch (error) {
       console.error(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   var totalPrice = cart.reduce((prev, next) => prev + next.price, 0);
 
   const handleBookOrders = async () => {
+    setIsLoading(true);
+
     try {
       await axios.post(
         "https://arman-food-app.onrender.com/api/orders/add",
@@ -66,6 +65,8 @@ export const Cart = () => {
       });
     } catch (error) {
       console.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
