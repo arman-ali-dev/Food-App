@@ -103,6 +103,7 @@ export const Order = () => {
                             )
                           }
                           className="cancelBtn border-0 outline-0 w-100 text-light"
+                          disabled={isLoading}
                         >
                           {isLoading ? (
                             <span className="loader"></span>

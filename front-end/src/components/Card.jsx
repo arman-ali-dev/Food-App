@@ -17,73 +17,86 @@ export const Card = ({ item }) => {
 
   const handleAddToCart = async () => {
     setIsLoading(true);
-    try {
-      const { data } = await axios.post(
-        "https://arman-food-app.onrender.com/api/carts/add",
-        {
-          foodID: item._id,
-          imageURL: item.imageUrl,
-          qty,
-          name: item.name,
-          size,
-          price,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-        }
-      );
-
-      let isItemExists = cart?.some(
-        (elem) => elem.foodID == item._id && elem.size == size
-      );
-
-      var updatedCartItems;
-      if (isItemExists) {
-        updatedCartItems = cart.map((elem) =>
-          elem.foodID == item._id && elem.size == size
-            ? {
-                ...elem,
-                quantity: elem.quantity + Number(qty),
-                ["price"]: elem.price + price,
-              }
-            : elem
-        );
-        isItemExists = undefined;
-      } else {
-        updatedCartItems = [
+    if (user) {
+      try {
+        const { data } = await axios.post(
+          "https://arman-food-app.onrender.com/api/carts/add",
           {
-            _id: data.cartItem._id,
             foodID: item._id,
-            userID: user?._id,
             imageURL: item.imageUrl,
+            qty,
             name: item.name,
-            quantity: Number(qty),
             size,
             price,
           },
-          ...cart,
-        ];
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
+
+        let isItemExists = cart?.some(
+          (elem) => elem.foodID == item._id && elem.size == size
+        );
+
+        var updatedCartItems;
+        if (isItemExists) {
+          updatedCartItems = cart.map((elem) =>
+            elem.foodID == item._id && elem.size == size
+              ? {
+                  ...elem,
+                  quantity: elem.quantity + Number(qty),
+                  ["price"]: elem.price + price,
+                }
+              : elem
+          );
+          isItemExists = undefined;
+        } else {
+          updatedCartItems = [
+            {
+              _id: data.cartItem._id,
+              foodID: item._id,
+              userID: user?._id,
+              imageURL: item.imageUrl,
+              name: item.name,
+              quantity: Number(qty),
+              size,
+              price,
+            },
+            ...cart,
+          ];
+        }
+
+        dispatch(setCart(updatedCartItems));
+
+        toast.success("item added in cart!", {
+          position: "bottom-right",
+          autoClose: 600,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } catch (error) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
-
-      dispatch(setCart(updatedCartItems));
-
-      toast.success("item added in cart!", {
-        position: "bottom-right",
-        autoClose: 600,
+    } else {
+      return toast.error("Please Login!", {
+        position: "top-center",
+        autoClose: 800,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
-    } catch (error) {
-      console.error(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -143,6 +156,7 @@ export const Card = ({ item }) => {
             <button
               onClick={handleAddToCart}
               className="w-100 border-0 outline-0  py-2 text-light"
+              disabled={isLoading}
             >
               {isLoading ? <span className="loader"></span> : "Add to cart"}
             </button>

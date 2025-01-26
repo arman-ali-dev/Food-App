@@ -39,7 +39,7 @@ export const Cart = () => {
   const handleBookOrders = async () => {
     try {
       await axios.post(
-        "http://localhost:8000/api/orders/add",
+        "https://arman-food-app.onrender.com/api/orders/add",
         {
           totalPrice,
           cartItems: cart,
@@ -99,6 +99,7 @@ export const Cart = () => {
                         <button
                           onClick={() => handleDeleteCartItem(item._id)}
                           className="border-0"
+                          disabled={isLoading}
                         >
                           <i className="fa-solid fa-trash text-danger"></i>
                         </button>
