@@ -5,7 +5,7 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { Error } from "./pages/Error";
-import { Order } from "./pages/Order";
+import { Orders } from "./pages/Orders";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
           path="myOrder"
           element={
             <ProtectedRoute>
-              <Order />
+              <Orders />
             </ProtectedRoute>
           }
         ></Route>
