@@ -87,6 +87,7 @@ export const Card = ({ item }) => {
         setIsLoading(false);
       }
     } else {
+      setIsLoading(false);
       return toast.error("Please Login!", {
         position: "top-center",
         autoClose: 800,
