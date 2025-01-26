@@ -126,6 +126,7 @@ export const Cart = () => {
               <button
                 onClick={handleBookOrders}
                 className="orderBtn btn px-4 text-light"
+                disabled={isLoading}
               >
                 {isLoading ? <span className="loader"></span> : "Order Now"}
               </button>
