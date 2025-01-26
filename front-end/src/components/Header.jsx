@@ -12,6 +12,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,8 +28,9 @@ export default function Header() {
   }, []);
 
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
-      await axios.get("http://localhost:8000/api/users/logout", {
+      await axios.get("https://arman-food-app.onrender.com//api/users/logout", {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
@@ -38,7 +40,11 @@ export default function Header() {
       Cookies.remove("token");
       dispatch(setAuthUser(null));
       navigate("/login");
-    } catch (error) {}
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCloseMenuBar = () => {
@@ -185,8 +191,13 @@ export default function Header() {
                           }}
                           className="btn myOrderBtn btn text-dark px-4 d-inline-block nav-link text-light"
                           aria-current="page"
+                          disabled={isLoading}
                         >
-                          Log Out
+                          {isLoading ? (
+                            <span className="loader"></span>
+                          ) : (
+                            "Log Out"
+                          )}
                         </button>
                       </li>
                     </>
