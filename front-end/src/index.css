@@ -397,7 +397,7 @@ body {
   filter: invert(0%);
 }
 button:disabled {
-  cursor: no-drop;
+  cursor: no-drop !important;
 }
 
 .total-amount {
